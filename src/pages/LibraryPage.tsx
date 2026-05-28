@@ -76,7 +76,7 @@ export default function LibraryPage() {
         limit: 24,
       });
 
-      setItems((prev) => reset ? page.items : [...prev, ...page.items]);
+      setItems((prev) => reset ? (page.items ?? []) : [...prev, ...(page.items ?? [])]);
       setHasMore(page.has_more);
       setCursor(page.next_cursor);
     } catch {
