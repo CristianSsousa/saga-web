@@ -40,7 +40,20 @@ export const addToLibrary = (payload: {
   cover_url: string;
   source: string;
   status: Status;
-}) => apiFetch<LibraryItem>("/api/v1/library", { method: "POST", body: JSON.stringify(payload) });
+}) =>
+  apiFetch<LibraryItem>("/api/v1/library", {
+    method: "POST",
+    body: JSON.stringify({
+      media: {
+        id: payload.external_id,
+        type: payload.media_type,
+        title: payload.title,
+        cover_url: payload.cover_url,
+        source: payload.source,
+      },
+      status: payload.status,
+    }),
+  });
 
 export const updateLibraryItem = (id: string, payload: { status?: Status; user_rating?: number; notes?: string }) =>
   apiFetch<LibraryItem>(`/api/v1/library/${id}`, { method: "PUT", body: JSON.stringify(payload) });
